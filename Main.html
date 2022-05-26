@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>main</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="./common/jquery/jquery-3.6.0.js"></script>
+    <script>
+      /*
+      쿠키 생성 기본
+        매개변수로 전달되는 exp가 양수면 미래의 시간이 만들어지므로 쿠키가 생성된다.
+        반대로 음수라면 쿠키는 삭제된다. 즉, 쿠키는 과거의 시간으로 설정되면 삭제된다.
+        쿠키는 웹브라우저를 닫아도 삭제되지 않고 유효시간동안 유지된다.
+      */
+      // 해당 함수는 3개의 매개변수로 구성된다. 쿠키명, 쿠키값, 유효기간
+      var setCookie = function (name, value, exp) {
+        // 시간 설정을 위해 Date객체를 생성한다.
+        var date = new Date();
+        console.log('1970-01-01부터 지금까지의 초(타임스탬프)', date.getTime());
+        // 매개변수로 전달된 날짜(exp)에 하루에 해당하는 86400초를 곱해서 유효기간을 계산한다.
+        date.setTime(date.getTime() + exp * 24 * 60 * 60 * 1000);
+        console.log('유효기간', date.toUTCString());
+        // 쿠키 생성 : 쿠키명 = 쿠키값; 유효시간; 적용될 경로;
+        document.cookie = name + '=' + value + '; expires = ' + date.toUTCString() + ';path=/';
+      };
+      /*
+      쿠키 읽기 기본
+        쿠키는 ;(세미콜론)으로 구분되므로 1차 split()하고, =(이퀄)로 2차 split한 후 쿠키값을 가져온다.
+
+      쿠키 생성 => name + '=' + value + '; expires = ' + date.toUTCString() + ';path=/'
+        우리가 직접 생성한 쿠키
+         => popup1 = 팝업창 열기; expires = 내일 날짜; path = /
+        세미콜론으로 1차 split
+        =>  [0] : popup1 = 팝업창 열기
+            [1] : expires = 내일 날짜
+            [2] : path = /
+        이퀄로 2차 split
+        =>  [0]에 쿠키값이 있으므로
+              쿠키명 : popup1
+              쿠키값 : 팝업창 열기
+      */
+      var getCookie = function (name) {
+        var values = document.cookie.split(';');
+        for (var i = 0; i < values.length; i++) {
+          var unit = values[i].trim();
+          var value = unit.split('=');
+          if (value[0] == name) {
+            return unescape(value[1]);
+          }
+        }
+        // split()을 여러 가지를 기준으로 자르기 사용
+        // var values = document.cookie.split(/\;|\=/);
+        // if (values[0] == name) {
+        //   return unescape(values[1]);
+        // }
+      };
+      // 쿠키 생성하기
+      function makeCookie() {
+        var cName = document.getElementById('cName').value;
+        var cValue = document.getElementById('cValue').value;
+        // 쿠키 생성시에는 양수를 전달한다. 미래의 날짜가 생성됨.
+        setCookie(cName, cValue, 1);
+        alert('쿠키가 생성되었습니다.');
+        // 화면을 새로고침 한다. F5번을 누른 것과 동일하다.
+        location.reload();
+      }
+      // 쿠키 읽어오기
+      function readCookie() {
+        // 읽어올 쿠키명을 가져온다.
+        var cName = document.getElementById('cName').value;
+        // 해당 이름으로 생성된 쿠키가 있다면 읽어온다.
+        var readValue = getCookie(cName);
+        if (readValue == null) {
+          alert('해당 이름으로 생성된 쿠키가 없습니다.');
+        } else {
+          alert('쿠키값 : ' + readValue);
+        }
+      }
+      // 쿠키 삭제하기 : 과거의 날짜로 유효기간을 설정하면 삭제된다.
+      function deleteCookie() {
+        var cName = document.getElementById('cName').value;
+
+        setCookie(cName, cValue, -1);
+        alert('쿠키가 삭제되었습니다.');
+        location.reload();
+      }
+      // 팝업창 닫기
+      function closeWin() {
+        // display속성을 통해 div엘리먼트를 숨김처리
+        document.getElementById('popupWin').style.display = 'none';
+        // 쿠키를 생성한다.
+        setCookie('popupWin', 'off', 1);
+        location.reload();
+      }
+
+      window.onload = function () {
+        var popupWinValue = getCookie('popupWin');
+        if (popupWinValue == 'off') {
+          // 팝업창을 숨김처리 한다. 즉, 팝업을 열지 않는다.
+          document.getElementById('popupWin').style.display = 'none';
+        } else {
+          document.getElementById('popupWin').style.display = 'block';
+        }
+        console.log('imgTag배열 생성');
+        imgTag = document.getElementsByTagName('img');
+        console.log(imgTag);
+      };
+    </script>
+    <style>
+      * {
+        margin: 0 auto;
+      }
+      fieldset {
+        border: 1px solid green;
+        height: 100%;
+      }
+      table {
+        border: 1px solid blue;
+        width: 100%;
+      }
+      tr {
+        border: 1px solid red;
+        height: 50px;
+      }
+      td {
+        border: 1px solid yellow;
+        padding: 0;
+        text-align: center;
+      }
+      p {
+        line-height: 2;
+      }
+      button {
+        border: 0;
+      }
+      #a {
+        transition-duration: 1s;
+      }
+      div {
+        /* border: 1px solid red; */
+      }
+      .popupWin {
+        width: 450px;
+        border: 1px solid gray;
+        position: absolute;
+        top: 0;
+      }
+      .subMenu {
+        width: 220px;
+        height: 163px;
+        padding-top: 20px;
+        position: relative;
+      }
+      @keyframes ani01 {
+        50% {
+          transform: scale(1.1);
+        }
+        100% {
+          transform: scale(1);
+        }
+      }
+      a.sub {
+        width: 220px;
+        height: 163px;
+        display: inline-block;
+        border: 1px solid red;
+        padding-top: 20px;
+        position: absolute;
+        top: 0;
+        left: 0;
+      }
+
+      div a img:hover {
+        animation: ani01 1s infinite;
+      }
+      a strong {
+        color: #ffffff;
+        font-size: 21px;
+        font-weight: 400;
+        display: inline-block;
+        position: relative;
+      }
+      a strong:before,
+      a strong:after {
+        content: '';
+        border-bottom: 1px solid #fff;
+        position: absolute;
+        bottom: 0;
+        width: 0;
+      }
+      a strong:before {
+        left: 0px;
+      }
+      a strong:after {
+        right: 0px;
+      }
+      a:hover strong:before,
+      a:hover strong:after {
+        width: 50%;
+      }
+      a strong:before,
+      a strong:after {
+        transition: all 0.3s ease;
+        transition: all 0.3s ease;
+      }
+    </style>
+  </head>
+  <body>
+    <fieldset>
+      <table>
+        <tr>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td colspan="3"></td>
+        </tr>
+        <tr>
+          <td colspan="3">
+            <div class="subMenu text-center Menu01" style="display: inline-block; background-color: #19aad9">
+              <a href="" class="sub">
+                <img src="./images/icon01.PNG" alt="민원신청" />
+                <br />
+                <strong>민원신청</strong>
+              </a>
+            </div>
+
+            <div class="subMenu text-center" style="display: inline-block; background-color: #17419a">
+              <a href="" class="sub">
+                <img src="./images/icon02.PNG" alt="민원상담신청" />
+                <br />
+                <strong>민원상담신청</strong>
+              </a>
+            </div>
+
+            <div class="subMenu text-center" style="display: inline-block; background-color: #5193f6">
+              <a href="" class="sub">
+                <img src="./images/icon03.PNG" alt="제안신청" />
+                <br />
+                <strong>제안신청</strong>
+              </a>
+            </div>
+
+            <div class="subMenu text-center" style="display: inline-block; background-color: #5973e1">
+              <a href="" class="sub">
+                <img src="./images/icon04.PNG" alt="결과조회" />
+                <br />
+                <strong>결과조회</strong>
+              </a>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="3"></td>
+        </tr>
+        <tr>
+          <td colspan="3"></td>
+        </tr>
+        <tr>
+          <td colspan="3">
+            <p style="background-color: #696a70">
+              <button style="background-color: #696a70; color: white; font-size: 10px">이용약관</button>
+              <button style="background-color: #696a70; color: white; font-size: 10px">오류신고·이용문의</button>
+              <button style="background-color: #696a70; color: white; font-size: 10px">뷰어다운로드</button>
+              <button style="background-color: #696a70; color: white; font-size: 10px">시각장애인 이용안내</button>
+            </p>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="3" style="text-align: left; font-size: 0.5em">
+            30102 세종특별자치시 도움5로 20 정부세종청사 국민권익위원회
+            <br />
+            정부민원안내 콜센터 (국번없이 110번(무료), 365일 24시간 상담가능, 수어상담 평일 09:00~18:00)
+            <br />
+            국민신문고 시스템 이용관련 문의 (1600-8172(유료), 070-4140-1458(유료),평일 09:00~18:00)
+            <br />
+            COPYRIGHT(c)국민권익위원회 All Rights Reserved.
+          </td>
+        </tr>
+      </table>
+    </fieldset>
+    <div class="container popupWin h-10" id="popupWin" style="display: block">
+      <div class="row">
+        <div class="col-sm-12 bg-primary text-white fs-5 fw-bold pt-4 text-center" style="height: 70px; border-bottom: 1px solid gray">
+          국민신문고 시스템 점검작업 안내(05.19)
+        </div>
+        <div class="col-sm-12 pt-2" style="text-align: left; border-bottom: 1px solid gray">
+          <p style="line-height: 0"><br /></p>
+          <p style="line-height: 0.2">국민신문고 시스템 점검작업으로 인해</p>
+          <p style="line-height: 0.2">국민신문고 사용중일시적으로 로그아웃 될 수</p>
+          <p style="line-height: 0.2">있음을 알려드립니다.</p>
+          <p style="line-height: 0"><br /></p>
+          <p style="line-height: 0.2">- 작업 일시 : 05/19(목) 19:00 ~ 24:00 (5시간)</p>
+          <p style="line-height: 0.2">- 작업 내용 : 국민신문고 시스템 점검 작업</p>
+          <p>※ 작업 시간은 상황에 따라 조정될 수 있습니다</p>
+        </div>
+        <div class="d-flex">
+          <div class="col-sm-6 text-center" style="border-right: 1px solid gray">
+            <button class="btn bg-white" id="popChk" onclick="closeWin();">오늘 하루 그만보기</button>
+          </div>
+          <div class="col-sm-6 text-center">
+            <button class="btn bg-white">닫기</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

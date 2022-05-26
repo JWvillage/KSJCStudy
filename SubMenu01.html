@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="./common/jquery/jquery-3.6.0.js"></script>
+    <style>
+      .subMenu {
+        width: 220px;
+        height: 163px;
+        padding-top: 20px;
+        position: relative;
+      }
+      @keyframes ani01 {
+        50% {
+          transform: scale(1.1);
+        }
+        100% {
+          transform: scale(1);
+        }
+      }
+      a.sub {
+        width: 220px;
+        height: 163px;
+        display: inline-block;
+        border: 1px solid red;
+        padding-top: 20px;
+        position: absolute;
+        top: 0;
+        left: 0;
+      }
+
+      div a img:hover {
+        animation: ani01 1s infinite;
+      }
+      a strong {
+        color: #ffffff;
+        font-size: 21px;
+        font-weight: 400;
+        display: inline-block;
+        position: relative;
+      }
+      a strong:before,
+      a strong:after {
+        content: '';
+        border-bottom: 1px solid #fff;
+        position: absolute;
+        bottom: 0;
+        width: 0;
+      }
+      a strong:before {
+        left: 0px;
+      }
+      a strong:after {
+        right: 0px;
+      }
+      a:hover strong:before,
+      a:hover strong:after {
+        width: 50%;
+      }
+      a strong:before,
+      a strong:after {
+        transition: all 0.3s ease;
+        transition: all 0.3s ease;
+      }
+    </style>
+    <!-- <script>
+      $(function(){
+        $('.subMenu').on('mouseover', function(){
+          var wid = parseInt($('.subMenu img').width());
+          var hei = parseInt($('.subMenu img').height());
+          console.log(wid, hei);
+          // $('.subMenu img').animate({width: wid*1.1 + 'px', height: hei*1.1 + 'px'},'slow');
+          // $('.subMenu img').animate({width: wid + 'px', height: hei + 'px'},'slow');
+        })
+      })
+    </script> -->
+  </head>
+  <body>
+    <div class="subMenu text-center Menu01" style="display: inline-block; background-color: #19aad9">
+      <a href="" class="sub">
+        <img src="./images/icon01.PNG" alt="민원신청" />
+        <br />
+        <strong>민원신청</strong>
+      </a>
+    </div>
+
+    <div class="subMenu text-center" style="display: inline-block; background-color: #17419a">
+      <a href="" class="sub">
+        <img src="./images/icon02.PNG" alt="민원상담신청" />
+        <br />
+        <strong>민원상담신청</strong>
+      </a>
+    </div>
+
+    <div class="subMenu text-center" style="display: inline-block; background-color: #5193f6">
+      <a href="" class="sub">
+        <img src="./images/icon03.PNG" alt="제안신청" />
+        <br />
+        <strong>제안신청</strong>
+      </a>
+    </div>
+
+    <div class="subMenu text-center" style="display: inline-block; background-color: #5973e1">
+      <a href="" class="sub">
+        <img src="./images/icon04.PNG" alt="결과조회" />
+        <br />
+        <strong>결과조회</strong>
+      </a>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SubMenu02.html</title>
+    <link rel="stylesheet" href="./bootstrap5.1.3/css/bootstrap.css" />
+    <script src="bootstrap5.1.3/js/bootstrap.bundle.js"></script>
+    <style>
+      #semiBtn {
+        border: 1px solid rgb(175, 175, 175);
+        font-size: 12px;
+      }
+      @keyframes ani02 {
+        100% {
+          transform: rotateY(360deg);
+        }
+      }
+      div p.semi {
+        margin: 0;
+        display: inline-block;
+      }
+      div img.semi_btn_icon:hover {
+        animation: ani02 1s infinite;
+      }
+      p.semi:hover {
+        transform: scale(1.1);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="row">
+      <div class="col-sm-6">
+        <div class="btn-group semi_btn">
+          <button type="button" id="semiBtn" class="btn rounded-0">
+            <img class="semi_btn_icon" src="./images/Icon05.png" alt="적극행정신청" />
+            <p class="semi">적극행정신청</p>
+          </button>
+          <button type="button" id="semiBtn" class="btn rounded-0">
+            <img class="semi_btn_icon" src="./images/Icon06.png" alt="소극행정신고" />
+            <p class="semi">소극행정신고</p>
+          </button>
+          <button type="button" id="semiBtn" class="btn rounded-0">
+            <img class="semi_btn_icon" src="./images/Icon07.png" alt="갑질피해신고" />
+            <p class="semi">갑질피해신고</p>
+          </button>
+          <button type="button" id="semiBtn" class="btn rounded-0">
+            <img class="semi_btn_icon" src="./images/Icon08.png" alt="예산낭비신고" />
+            <p class="semi">예산낭비신고</p>
+          </button>
+          <button type="button" id="semiBtn" class="btn rounded-0">
+            <img class="semi_btn_icon" src="./images/Icon09.png" alt="부패공익 신고" />
+            <p class="semi">부패공익 신고</p>
+          </button>
+          <button type="button" id="semiBtn" class="btn rounded-0">
+            <img class="semi_btn_icon" src="./images/Icon10.png" alt="행정심판청구" />
+            <p class="semi">행정심판청구</p>
+          </button>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
